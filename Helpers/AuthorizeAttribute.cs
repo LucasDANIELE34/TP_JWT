@@ -20,14 +20,14 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
         var user = (User)context.HttpContext.Items["User"];
         if (user == null)
         {
-            // not logged in
-            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+            // utilisateur non connecté
+            context.Result = new JsonResult(new { message = "Non autorisé" }) { StatusCode = StatusCodes.Status401Unauthorized };
         }
 
         if (_roles.Any() && !_roles.Contains(user.Role))
         {
-            // user's role is not authorized
-            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+            // le rôle de l'utilisateur n'est pas autorisé
+            context.Result = new JsonResult(new { message = "Non autorisé" }) { StatusCode = StatusCodes.Status401Unauthorized };
         }
     }
 }

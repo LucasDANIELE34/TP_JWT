@@ -3,30 +3,30 @@ using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// add services to DI container
+// ajouter les services au conteneur DI
 {
     var services = builder.Services;
     services.AddCors();
     services.AddControllers();
 
-    // configure strongly typed settings object
+    // configurer l'objet de paramètres de type fortement typé
     services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
-    // configure DI for application services
+    // configurer DI pour les services de l'application
     services.AddScoped<IUserService, UserService>();
 }
 
 var app = builder.Build();
 
-// configure HTTP request pipeline
+// configurer le pipeline des requêtes HTTP
 {
-    // global cors policy
+    // politique cors globale
     app.UseCors(x => x
         .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader());
 
-    // custom jwt auth middleware
+    // middleware d'authentification jwt personnalisé
     app.UseMiddleware<JwtMiddleware>();
 
     app.MapControllers();

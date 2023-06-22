@@ -9,7 +9,7 @@ using WebApi.Services;
 [Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private IUserService _userService;
+    private readonly IUserService _userService;
 
     public UsersController(IUserService userService)
     {
@@ -22,7 +22,7 @@ public class UsersController : ControllerBase
         var response = _userService.Authenticate(model);
 
         if (response == null)
-            return BadRequest(new { message = "Username or password is incorrect" });
+            return BadRequest(new { message = "Nom d'utilisateur ou mot de passe incorrect" });
 
         return Ok(response);
     }
@@ -39,6 +39,6 @@ public class UsersController : ControllerBase
     [HttpGet("only-admin")]
     public IActionResult OnlyAdmin()
     {
-        return Ok("Hello Admin!");
+        return Ok("Bonjour Admin !");
     }
 }
