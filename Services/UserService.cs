@@ -39,7 +39,7 @@ public class UserService : IUserService
         if (user == null) return null;
 
         // authentication successful so generate jwt token
-        var token = generateJwtToken(user);
+        var token = GenerateJwtToken(user);
 
         return new AuthenticateResponse(user, token);
     }
@@ -56,7 +56,7 @@ public class UserService : IUserService
 
     // helper methods
 
-    private string generateJwtToken(User user)
+    private string GenerateJwtToken(User user)
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();
