@@ -17,7 +17,7 @@ public interface IUserService
 
 public class UserService : IUserService
 {
-    // users hardcoded for simplicity, store in a db with hashed passwords in production applications
+    // utilisateurs en dur pour simplifier, stocker dans une base de données avec des mots de passe hachés dans les applications de production
     private readonly List<User> _users = new()
     {
         new User { Id = 1, FirstName = "Admin", LastName = "Admin", Username = "Admin", Password = "Admin", Role = "Admin"},
@@ -35,10 +35,10 @@ public class UserService : IUserService
     {
         var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
-        // return null if user not found
+        // retourner null si l'utilisateur n'est pas trouvé
         if (user == null) return null;
 
-        // authentication successful so generate jwt token
+        // authentification réussie, générer un jeton JWT
         var token = GenerateJwtToken(user);
 
         return new AuthenticateResponse(user, token);
@@ -54,11 +54,11 @@ public class UserService : IUserService
         return _users.FirstOrDefault(x => x.Id == id);
     }
 
-    // helper methods
+    // méthodes d'assistance
 
     private string GenerateJwtToken(User user)
     {
-        // generate token that is valid for 7 days
+        // générer un jeton valide pendant 7 jours
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
